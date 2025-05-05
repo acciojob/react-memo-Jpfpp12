@@ -26,7 +26,13 @@ function App() {
       <h1>Todo App with Counter</h1>
       <Counter counter={counter} setCounter={setCounter} />
       <TodoList todos={todos} />
-      <MemoInput taskInput={taskInput} setTaskInput={setTaskInput} addTodo={addTodo} />
+      <MemoInput
+        taskInput={taskInput}
+        setTaskInput={setTaskInput}
+        addTodo={addTodo}
+        data-testid="memo-input"
+      />
+      <button onClick={addTodo} data-testid="add-todo-button">Add Todo</button>
       <ReactMemo totalTasks={totalTasks} />
     </div>
   );
