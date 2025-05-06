@@ -1,11 +1,22 @@
 import React from 'react';
 
-const ReactMemo = React.memo(({ totalTasks }) => {
-  return (
-    <div>
-      <h3>Total Tasks: {totalTasks}</h3>
-    </div>
-  );
+// React.memo to prevent unnecessary re-renders of task items
+const TaskItem = React.memo(({ task }) => {
+  console.log(`Rendering task: ${task}`);
+  return <li>{task}</li>;
 });
 
-export { ReactMemo };
+const ReactMemo = ({ tasks }) => {
+  return (
+    <div>
+      <h3>Task List (Memoized Items)</h3>
+      <ul>
+        {tasks.map((task, index) => (
+          <TaskItem key={index} task={task} />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default ReactMemo;
