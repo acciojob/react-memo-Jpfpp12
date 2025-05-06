@@ -1,62 +1,59 @@
 <p>Now I can render any React component on any DOM node I want using ReactDOM.render</p>
-import React, { useState, useMemo } from 'react';
-import UseMemo from './UseMemo';
-import ReactMemo from './ReactMemo';
+import React, { useState, useMemo, memo } from 'react';
 
-const App = () => {
-  const [tasks, setTasks] = useState(["New todo"]);
+const TaskManagementApp = () => {
+  const [tasks, setTasks] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [input, setInput] = useState("");
+  const [taskInput, setTaskInput] = useState('');
 
-  // Function to add new todo with validation
   const addTodo = () => {
-    if (input.length > 5) {
-      setTasks([...tasks, input]);
-      setInput("");
+    if (taskInput.trim().length > 5) {
+      setTasks([...tasks, taskInput]);
+      setTaskInput('');
     } else {
-      alert("Task must be more than 5 characters");
+      alert('Task must be more than 5 characters');
     }
   };
 
-  // Memoizing the task list to optimize rendering
-  const taskCount = useMemo(() => tasks.length, [tasks]);
+  const incrementCounter = () => {
+    setCounter(counter + 1);
+  };
+
+  const memoizedTasks = useMemo(() => tasks, [tasks]);
+  const memoizedCounter = useMemo(() => counter, [counter]);
 
   return (
-    <div className="App">
-      <h1>Task Management App</h1>
+    <div className="app">
+      <header className="header">
+        <h1>Task Management App</h1>
+      </header>
+      <main>
+        <div className="task-input">
+          <input
+            type="text"
+            placeholder="Enter a task"
+            value={taskInput}
+            onChange={(e) => setTaskInput(e.target.value)}
+          />
+          <button onClick={addTodo}>Add Todo</button>
+        </div>
 
-      {/* Task List */}
-      <div>
-        <h2>Tasks ({taskCount})</h2>
-        <ul>
-          {tasks.map((task, index) => (
-            <li key={index}>{task}</li>
-          ))}
-        </ul>
-      </div>
+        <div className="counter">
+          <button onClick={incrementCounter}>Increment Counter</button>
+          <h2>Counter: {memoizedCounter}</h2>
+        </div>
 
-      {/* Task Input */}
-      <div>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter a custom task"
-        />
-        <button onClick={addTodo}>Submit Task</button>
-      </div>
-
-      {/* Increment Counter */}
-      <div>
-        <button onClick={() => setCounter(counter + 1)}>Increment Counter</button>
-        <p>Counter: {counter}</p>
-      </div>
-
-      {/* UseMemo and ReactMemo Example */}
-      <UseMemo tasks={tasks} />
-      <ReactMemo tasks={tasks} />
+        <div className="task-list">
+          <h3>Tasks</h3>
+          <ul>
+            {memoizedTasks.map((task, index) => (
+              <li key={index}>{task}</li>
+            ))}
+          </ul>
+        </div>
+      </main>
     </div>
   );
 };
 
-export default App;
+export default memo(TaskManagementApp);
