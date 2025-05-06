@@ -19,7 +19,7 @@ const UseMemo = () => {
     <div>
       <h2>UseMemo Example</h2>
       <p>Counter: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Increment Count</button>
+      <button onClick={() => setCount(count + 1)} data-cy="increment-btn">Increment Count</button>
 
       <div>
         <p>Expensive Calculation Result: {memoizedResult}</p>
@@ -32,7 +32,7 @@ const UseMemo = () => {
             <li key={index}>{task}</li>
           ))}
         </ul>
-        <button onClick={addTask}>Add Task</button>
+        <button onClick={addTask} data-cy="add-todo-btn">Add Todo</button>
       </div>
     </div>
   );
