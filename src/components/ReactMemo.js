@@ -26,8 +26,9 @@ const ReactMemo = () => {
           value={taskInput}
           onChange={(e) => setTaskInput(e.target.value)}
           placeholder="Enter task"
+          data-cy="task-input"
         />
-        <button onClick={addTask}>Add Task</button>
+        <button onClick={addTask} data-cy="add-skill-btn">Add Skill</button>
       </div>
 
       <div>
